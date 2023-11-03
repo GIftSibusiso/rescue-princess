@@ -1,11 +1,8 @@
 package rescue.game;
 
-import java.net.ServerSocket;
 import java.net.UnknownHostException;
 
 import rescue.game.server.ServerSetUp;
-
-import java.net.InetAddress;
 
 /**
  * Hello world!

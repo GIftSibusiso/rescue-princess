@@ -54,4 +54,11 @@ public class ServerSetUp {
     public int getPort() {
         return this.Port;
     }
+
+    public void stopServer()  {
+        try {
+            server.close();
+        } catch (IOException e) {
+        }
+    }
 }
