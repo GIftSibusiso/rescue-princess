@@ -1,12 +1,18 @@
 package rescue.game.server;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
+
+import rescue.game.server.player.PlayersConnection;
 
 public class ClientConnection implements Runnable {
+    List<PlayersConnection> players = new ArrayList<>();
     ServerSocket server;
+    public boolean playerConnection = true;
 
     public ClientConnection( ServerSocket server ) {
         this.server = server;
@@ -14,19 +20,21 @@ public class ClientConnection implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            connectClient();
-            System.out.println("Client connected");
-        }
+        connectClient();
+        System.out.println("Connection closed");
     }
     
     private void connectClient() {
         try {
-            Socket socket = server.accept();
-            PrintWriter write = new PrintWriter(socket.getOutputStream());
-            write.println("You're connected to my server... Enjoy :)");
-            write.flush();
-            System.out.println(socket.getInetAddress());
+            while ( playerConnection ) {
+                Socket socket = server.accept();
+                PlayersConnection player = new PlayersConnection(socket);
+                players.add(player);
+                Thread thread = new Thread(player);
+                thread.start();
+            }
+        } catch ( SocketException e ) {
+            System.out.println("Server no longer active");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import rescue.game.Additions;
+
 public class ServerSetUp {
     private int Port; 
     private ServerSocket server;
     private boolean serverActive = false;
+    private ClientConnection clientConnections;
+    Thread thread;
 
     public ServerSetUp( int Port ) {
         this.Port = Port;
@@ -16,6 +20,7 @@ public class ServerSetUp {
 
         if (serverActive) {
             acceptClientConnection();
+            serverCommand();
         } else {
             System.out.println("Try closing port: " + getPort());
         }
@@ -37,8 +42,8 @@ public class ServerSetUp {
     }
 
     private void acceptClientConnection() {
-        ClientConnection clientConnections = new ClientConnection(server);
-        Thread thread = new Thread(clientConnections);
+        clientConnections = new ClientConnection(server);
+        thread = new Thread(clientConnections);
         thread.start();
     }
 
@@ -57,8 +62,21 @@ public class ServerSetUp {
 
     public void stopServer()  {
         try {
+            clientConnections.playerConnection = false;
+            thread.interrupt();
             server.close();
+            serverActive = false;
         } catch (IOException e) {
+        }
+    }
+
+    private void serverCommand() {
+        while (serverActive) {
+            String cmd = Additions.getInput("", "-> ");
+
+            if ( cmd.equals("quit") ) {
+                stopServer();
+            }
         }
     }
 }
