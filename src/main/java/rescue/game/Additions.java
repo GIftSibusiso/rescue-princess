@@ -2,6 +2,8 @@ package rescue.game;
 
 import java.util.Scanner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Additions {
     private static final Scanner CLI = new Scanner(System.in);
 
@@ -34,5 +36,9 @@ public class Additions {
         } catch ( NumberFormatException e ) {
             return false;
         }
+    }
+
+    public static ObjectMapper getMapper() {
+        return new ObjectMapper();
     }
 }
