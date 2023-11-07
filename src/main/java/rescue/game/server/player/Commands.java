@@ -4,10 +4,11 @@ import org.json.JSONObject;
 
 import rescue.game.server.player.commands.InvalidCommand;
 import rescue.game.server.player.commands.LaunchCommand;
+import rescue.game.server.world.World;
 
 public abstract class Commands{
 
-    public abstract Commands doCommand();
+    public abstract Commands doCommand( World world, PlayersConnection playersConnection );
 
     public abstract JSONObject getResponse();
 

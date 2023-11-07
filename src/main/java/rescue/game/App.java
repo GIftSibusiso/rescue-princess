@@ -1,6 +1,6 @@
 package rescue.game;
 
-import java.net.UnknownHostException;
+import java.io.IOException;
 
 import rescue.game.server.ServerSetUp;
 
@@ -10,7 +10,7 @@ import rescue.game.server.ServerSetUp;
  */
 public class App 
 {
-    public static void main( String[] args ) throws UnknownHostException
+    public static void main( String[] args ) throws IOException
     {
         new ServerSetUp(2000);
     }

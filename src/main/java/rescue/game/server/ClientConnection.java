@@ -8,14 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rescue.game.server.player.PlayersConnection;
+import rescue.game.server.world.World;
 
 public class ClientConnection implements Runnable {
     List<PlayersConnection> players = new ArrayList<>();
     ServerSocket server;
     public boolean playerConnection = true;
+    public World WORLD;
 
     public ClientConnection( ServerSocket server ) {
         this.server = server;
+        WORLD = new World();
     }
 
     @Override
@@ -28,7 +31,7 @@ public class ClientConnection implements Runnable {
         try {
             while ( playerConnection ) {
                 Socket socket = server.accept();
-                PlayersConnection player = new PlayersConnection(socket);
+                PlayersConnection player = new PlayersConnection(socket, WORLD);
                 players.add(player);
                 Thread thread = new Thread(player);
                 thread.start();
