@@ -18,7 +18,7 @@ public class ClientConnection implements Runnable {
 
     public ClientConnection( ServerSocket server ) {
         this.server = server;
-        WORLD = new World();
+        WORLD = new World(players);
     }
 
     @Override

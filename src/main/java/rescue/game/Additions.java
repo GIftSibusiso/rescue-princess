@@ -2,7 +2,11 @@ package rescue.game;
 
 import java.util.Scanner;
 
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import rescue.game.server.player.Player;
 
 public class Additions {
     private static final Scanner CLI = new Scanner(System.in);
@@ -40,5 +44,14 @@ public class Additions {
 
     public static ObjectMapper getMapper() {
         return new ObjectMapper();
+    }
+
+    public static JSONObject addData(Player player) {
+        JSONObject data = new JSONObject();
+
+        data.put("position", player.getPosition());
+        data.put("direction", player.getDirection());
+
+        return data;
     }
 }

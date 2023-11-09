@@ -4,18 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import rescue.game.Additions;
+import rescue.game.server.player.PlayersConnection;
 
 public class World {
     public int HEIGHT, WIDTH;
     Random random = new Random();
+    public List<PlayersConnection> PLAYERS;
     
-    public World () {
+    public World (List<PlayersConnection> players) {
         configWorld();
+        PLAYERS = players;
     }
 
     private void configWorld()  {
@@ -52,4 +56,5 @@ public class World {
 
         return new int[] {x, y};
     }  
+
 }

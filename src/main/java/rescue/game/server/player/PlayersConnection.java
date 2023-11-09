@@ -5,10 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import rescue.game.server.world.World;
@@ -20,7 +19,8 @@ public class PlayersConnection implements Runnable {
     private ObjectMapper mapper = new ObjectMapper();
     private World world;
 
-    private final int[] position = new int[2];
+    private final Player player = new Player();
+
 
     public PlayersConnection( Socket socket, World world ) throws IOException {
         this.world = world;
@@ -33,24 +33,24 @@ public class PlayersConnection implements Runnable {
     public void run() {
         try {
             while (true) {
-                JsonNode node = mapper.readTree(in.readLine());
+                Map<String, Object> request = mapper.readValue(in.readLine(), Map.class);
+                System.out.println(request);
 
-                Commands command = Commands.processRequest(node.get("command").asText());
+                Commands command = Commands.processRequest(
+                    request.get("command").toString(),
+                    (List<String>) request.get("arguments")
+                );
 
-                out.println(command.doCommand(world, this).getResponse());
+                out.println(command.doCommand(world, player).getResponse());
                 out.flush();
             }
+            
         } catch ( IOException ignore ) { }
+        
     }
 
-    public void setPosition(int[] newPosition) {
-        position[0] = newPosition[0];
-        position[1] = newPosition[1];
+    public Player getPlayer() {
+        return player;
     }
-
-    public int[] getPosition() {
-        return position;
-    }
-
     
 }
