@@ -57,4 +57,10 @@ public class World {
         return new int[] {x, y};
     }  
 
+    public Direction getRandomDirection() {
+        Direction[] directions = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
+        
+        return directions[random.nextInt(4)];
+    }
+
 }

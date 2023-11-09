@@ -24,6 +24,8 @@ public abstract class Commands{
                 return new MovementCommand(arguments, true);
             case "TURN":
                 return new TurnCommand(arguments);
+            case "STATE":
+            return new StateCommand();
             default:
                 return new InvalidCommand("'" +command+"' command does not exist");
         }

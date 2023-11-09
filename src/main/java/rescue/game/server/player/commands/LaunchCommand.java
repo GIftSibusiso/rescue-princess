@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import rescue.game.Additions;
 import rescue.game.server.player.Commands;
 import rescue.game.server.player.Player;
-import rescue.game.server.world.Direction;
 import rescue.game.server.world.World;
 
 public class LaunchCommand extends Commands{
@@ -19,9 +18,14 @@ public class LaunchCommand extends Commands{
     }
 
     @Override
-    public LaunchCommand doCommand(World world, Player player) {
+    public Commands doCommand(World world, Player player) {
+        if (player.getName() != null) {
+            return new InvalidCommand("Player already in world").doCommand(world, player);
+        }
+        // Make command recognise that robot is launched and assign given name to player 
         player.setPosition(world.launchPlayer());
-        player.setDirection(Direction.NORTH);
+        player.setDirection(world.getRandomDirection());
+        player.setName(arguments.get(1));
 
         response.put("result", "OK");
         response.put("message", "Player launched to world");

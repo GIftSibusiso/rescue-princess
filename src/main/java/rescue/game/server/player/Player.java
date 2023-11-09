@@ -3,8 +3,17 @@ package rescue.game.server.player;
 import rescue.game.server.world.Direction;
 
 public class Player {
+    private String name = null;
     private final int[] position = new int[2];
     private Direction direction;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void setPosition(int[] newPosition) {
         position[0] = newPosition[0];
