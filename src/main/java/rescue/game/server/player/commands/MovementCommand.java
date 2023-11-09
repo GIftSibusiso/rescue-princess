@@ -13,8 +13,14 @@ import rescue.game.server.world.World;
 public class MovementCommand extends Commands{
     private final JSONObject response = new JSONObject();
     private List<String> arguments;
+    private boolean backCommand = false;
 
     public MovementCommand(List<String> args) {
+        arguments = args;
+    }
+
+    public MovementCommand(List<String> args, boolean backCommand) {
+        this.backCommand = backCommand;
         arguments = args;
     }
 
@@ -23,10 +29,16 @@ public class MovementCommand extends Commands{
         if (arguments.size()!=1 || !Additions.isInt(arguments.get(0))) {
             return new InvalidCommand("Expected integer as argument").doCommand(world, player);
         }
-
-        Direction.Status status = player.getDirection()
-                .updatePosition(world, player, Integer.parseInt(arguments.get(0)));
+        Direction.Status status;
         String msg;
+
+        if ( backCommand ) {
+            status = player.getDirection()
+                    .updatePosition(world, player, -Integer.parseInt(arguments.get(0)));
+        } else {
+            status = player.getDirection()
+                    .updatePosition(world, player, Integer.parseInt(arguments.get(0)));
+        }
 
         switch(status) {
             case OBSTRUCTED:

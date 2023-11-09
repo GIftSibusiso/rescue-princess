@@ -34,7 +34,6 @@ public class PlayersConnection implements Runnable {
         try {
             while (true) {
                 Map<String, Object> request = mapper.readValue(in.readLine(), Map.class);
-                System.out.println(request);
 
                 Commands command = Commands.processRequest(
                     request.get("command").toString(),

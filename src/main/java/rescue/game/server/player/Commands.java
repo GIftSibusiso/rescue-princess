@@ -20,6 +20,8 @@ public abstract class Commands{
                 return new LaunchCommand(arguments);
             case "FORWARD":
                 return new MovementCommand(arguments);
+            case "BACK":
+                return new MovementCommand(arguments, true);
             default:
                 return new InvalidCommand("'" +command+"' command does not exist");
         }
