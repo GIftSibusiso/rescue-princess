@@ -4,7 +4,7 @@ import rescue.game.server.world.Direction;
 
 public class Player {
     private final int[] position = new int[2];
-    private Direction direction = Direction.EAST;
+    private Direction direction;
 
     public void setPosition(int[] newPosition) {
         position[0] = newPosition[0];

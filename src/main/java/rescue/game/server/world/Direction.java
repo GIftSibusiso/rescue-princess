@@ -18,6 +18,15 @@ public enum Direction {
             } 
             return status;
         }
+
+        @Override
+        public void updateDirection(Player player, boolean leftTurn) {
+            if (leftTurn) {
+                player.setDirection(WEST);
+            } else {
+                player.setDirection(EAST);
+            }
+        }
     },
 
     SOUTH {
@@ -34,6 +43,15 @@ public enum Direction {
                 player.setPosition(newPosition);
             } 
             return status;
+        }
+
+        @Override
+        public void updateDirection(Player player, boolean leftTurn) {
+            if (leftTurn) {
+                player.setDirection(EAST);
+            } else {
+                player.setDirection(WEST);
+            }
         }
 
     },
@@ -54,6 +72,15 @@ public enum Direction {
             return status;
         }
 
+        @Override
+        public void updateDirection(Player player, boolean leftTurn) {
+            if (leftTurn) {
+                player.setDirection(SOUTH);
+            } else {
+                player.setDirection(NORTH);
+            }
+        }
+
     },
 
     EAST {
@@ -72,9 +99,20 @@ public enum Direction {
             return status;
         }
 
+        @Override
+        public void updateDirection(Player player, boolean leftTurn) {
+            if (leftTurn) {
+                player.setDirection(NORTH);
+            } else {
+                player.setDirection(SOUTH);
+            }
+        }
+
     };
 
     public abstract Status updatePosition(World world, Player player, int steps);
+
+    public abstract void updateDirection(Player player, boolean leftTurn);
 
     public enum Status {
         SUCCESSFUL, OBSTRUCTED, OUTSIDE_WORLD
