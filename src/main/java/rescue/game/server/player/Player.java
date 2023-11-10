@@ -6,6 +6,7 @@ public class Player {
     private String name = null;
     private final int[] position = new int[2];
     private Direction direction;
+    private int shots, range, reloadTime, effect, health;
 
     public void setName(String name) {
         this.name = name;
@@ -30,5 +31,45 @@ public class Player {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
+    } 
+
+    public void setReloadTime(int reloadTime) {
+        this.reloadTime = reloadTime;
+    }
+
+    public void setShots(int shots) {
+        this.shots = shots;
+    }
+
+    public void setEffect(int effect) {
+        this.effect = effect;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public int getReloadTime() {
+        return reloadTime;
+    }
+    
+    public int getShots() {
+        return shots;
+    }
+
+    public int getEffect() {
+        return effect;
     }
 }

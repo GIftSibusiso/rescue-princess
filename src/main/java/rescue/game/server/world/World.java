@@ -10,7 +10,6 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import rescue.game.Additions;
-import rescue.game.server.player.Player;
 import rescue.game.server.player.PlayersConnection;
 
 public class World {

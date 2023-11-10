@@ -51,6 +51,10 @@ public class Additions {
 
         data.put("position", player.getPosition());
         data.put("direction", player.getDirection());
+        data.put("health", player.getHealth());
+        data.put("shots", player.getShots());
+        data.put("range", player.getRange());
+        data.put("reload", player.getReloadTime());
 
         return data;
     }

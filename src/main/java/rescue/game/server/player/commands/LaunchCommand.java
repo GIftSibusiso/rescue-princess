@@ -23,6 +23,7 @@ public class LaunchCommand extends Commands{
             return new InvalidCommand("Player already in world").doCommand(world, player);
         }
         // Make command recognise that robot is launched and assign given name to player 
+        configPlayer(arguments.get(0), player);
         player.setPosition(world.launchPlayer());
         player.setDirection(world.getRandomDirection());
         player.setName(arguments.get(1));
@@ -36,6 +37,30 @@ public class LaunchCommand extends Commands{
     @Override
     public JSONObject getResponse() {
         return response;
+    }
+
+    private void configPlayer(String type, Player player) {
+        // "  1. Shot gun\n  2. Sniper\n  3. Bazooka\nYour choice"
+        switch(type) {
+            case "1":
+                player.setShots(10);
+                player.setRange(15);
+                player.setReloadTime(4);
+                player.setEffect(10);
+            case "2":
+                player.setShots(3);
+                player.setRange(40);
+                player.setReloadTime(10);
+                player.setEffect(50);
+            case "3":
+                player.setShots(6);
+                player.setRange(23);
+                player.setReloadTime(7);
+                player.setEffect(30);
+
+        }
+
+        player.setHealth(100);
     }
     
 }
