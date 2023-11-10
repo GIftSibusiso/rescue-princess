@@ -13,13 +13,17 @@ import rescue.game.Additions;
 import rescue.game.server.player.PlayersConnection;
 
 public class World {
-    public int HEIGHT, WIDTH;
     Random random = new Random();
+
+    public int HEIGHT, WIDTH;
     public List<PlayersConnection> PLAYERS;
+    public Princess PRINCESS;
+    public Obstacle[] obstacles = { new Obstacle(0, 0, 5, 5) };
     
     public World (List<PlayersConnection> players) {
         configWorld();
         PLAYERS = players;
+        PRINCESS = new Princess(this);
     }
 
     private void configWorld()  {
@@ -51,8 +55,8 @@ public class World {
     }
 
     public int[] launchPlayer() {
-        int x = random.nextInt(WIDTH),
-            y = random.nextInt(HEIGHT);
+        int x = random.nextInt((int) (WIDTH*0.5)),
+            y = random.nextInt((int) (HEIGHT*0.5));
 
         return new int[] {x, y};
     }  

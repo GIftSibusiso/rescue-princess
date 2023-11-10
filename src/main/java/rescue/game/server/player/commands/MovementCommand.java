@@ -30,7 +30,6 @@ public class MovementCommand extends Commands{
             return new InvalidCommand("Expected integer as argument").doCommand(world, player);
         }
         Direction.Status status;
-        String msg;
 
         if ( backCommand ) {
             status = player.getDirection()
@@ -40,23 +39,13 @@ public class MovementCommand extends Commands{
                     .updatePosition(world, player, Integer.parseInt(arguments.get(0)));
         }
 
-        switch(status) {
-            case OBSTRUCTED:
-                msg = "There's a player on the way";
-                break;
-            case SUCCESSFUL:
-                msg = "Movement successful";
-                break;
-            case OUTSIDE_WORLD:
-                msg = "Can't go outside world";
-                break;
-            default:
-                msg = "Error occured";
-        }
-
         response.put("result", "OK");
-        response.put("message", msg);
+        response.put("message", getMessage(status));
         response.put("data", Additions.addData(player));
+
+        if ( world.PRINCESS.displacement(player.getPosition()) <= 10 ) {
+            response.put("message", "You've found the Princess :)");
+        }
 
         return this;
     }
@@ -66,4 +55,23 @@ public class MovementCommand extends Commands{
         return response;
     }
     
+    private String getMessage(Direction.Status status) {
+        String message;
+
+        switch(status) {
+            case OBSTRUCTED:
+                message = "Path blocked by something/someone";
+                break;
+            case SUCCESSFUL:
+                message = "Movement successful";
+                break;
+            case OUTSIDE_WORLD:
+                message = "Can't go outside world";
+                break;
+            default:
+                message = "Error occured";
+        }
+
+        return message;
+    }
 }

@@ -120,6 +120,14 @@ public enum Direction {
 
     private static Status newPostionStatus( int[] postion, int[] newPosition, World world ) {
 
+        for ( Obstacle obstacle: world.obstacles ) {
+            if ( 
+                obstacle.pathBlocked(postion, newPosition) || obstacle.positionBlocked(newPosition)
+             ) {
+                return Status.OBSTRUCTED;
+             }
+        }
+
         for ( PlayersConnection player: world.PLAYERS ) {
             int[] pos = player.getPlayer().getPosition();
             if (pos.equals(postion)) {
