@@ -10,6 +10,7 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import rescue.game.Additions;
+import rescue.game.server.player.Player;
 import rescue.game.server.player.PlayersConnection;
 
 public class World {
@@ -57,6 +58,20 @@ public class World {
     public int[] launchPlayer() {
         int x = random.nextInt((int) (WIDTH*0.5)),
             y = random.nextInt((int) (HEIGHT*0.5));
+
+        for ( Obstacle obstacle: obstacles ) {
+            if ( obstacle.positionBlocked(new int[] {x, y}) ) {
+                return launchPlayer();
+            }
+        }
+
+        for ( PlayersConnection playersConnection: PLAYERS ) {
+            int[] position = playersConnection.getPlayer().getPosition();
+
+            if (position.equals(new int[] {x, y})) {
+                return launchPlayer();
+            }
+        }
 
         return new int[] {x, y};
     }  
