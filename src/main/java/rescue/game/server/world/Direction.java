@@ -1,5 +1,9 @@
 package rescue.game.server.world;
 
+
+import java.util.List;
+import java.util.ArrayList;
+
 import rescue.game.server.player.Player;
 import rescue.game.server.player.PlayersConnection;
 
@@ -27,6 +31,12 @@ public enum Direction {
                 player.setDirection(EAST);
             }
         }
+
+        @Override
+        public int seeBarrier(World world, Player player) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'seeBarrier'");
+        }
     },
 
     SOUTH {
@@ -52,6 +62,12 @@ public enum Direction {
             } else {
                 player.setDirection(WEST);
             }
+        }
+
+        @Override
+        public int seeBarrier(World world, Player player) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'seeBarrier'");
         }
 
     },
@@ -81,6 +97,12 @@ public enum Direction {
             }
         }
 
+        @Override
+        public int seeBarrier(World world, Player player) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'seeBarrier'");
+        }
+
     },
 
     EAST {
@@ -108,11 +130,85 @@ public enum Direction {
             }
         }
 
+        @Override
+        public int seeBarrier(World world, Player player) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'seeBarrier'");
+        }
+
     };
 
     public abstract Status updatePosition(World world, Player player, int steps);
 
     public abstract void updateDirection(Player player, boolean leftTurn);
+
+    public static List<Obstacle> seeObstacles(World world, Player player, Direction direction) {
+        final List<Obstacle> obstacles = new ArrayList<>();
+        int[] position = player.getPosition(), position1;
+        
+        switch (direction) {
+            case NORTH:
+                position1 = new int[] { position[0], position[1] + player.getRange() };
+                break;
+            case SOUTH:
+                position1 = new int[] { position[0], position[1] - player.getRange() };
+                break;
+            case WEST:
+                position1 = new int[] { position[0] - player.getRange(), position[1] };
+                break;
+            default:
+                position1 = new int[] { position[0] + player.getRange(), position[1] };
+                break;
+        }
+
+        for (Obstacle  obstacle: world.obstacles) {
+            if ( obstacle.pathBlocked(position, position1) || obstacle.positionBlocked(position1) ) {
+                obstacles.add(obstacle);
+            }
+        }
+
+        return obstacles;
+    }
+
+    public static List<Player> seePlayers(World world, Player player, Direction direction) {
+        List<Player> players = new ArrayList<>();
+        int[] newPosition = getOtherPosition(player, direction);
+
+        for ( PlayersConnection playersConnection: world.PLAYERS ) {
+            Player player1 = playersConnection.getPlayer();
+
+            if ( player1.equals(player) ) {
+                continue;
+            } else if ( positionBlockedByPlayer(player.getPosition(), newPosition, player1.getPosition()) ) {
+                players.add(player1);
+            }
+        }
+
+        return players;
+    }
+
+    public abstract int seeBarrier(World world, Player player);
+
+    private static int[] getOtherPosition(Player player, Direction direction) {
+        int[] position = player.getPosition(), position1;
+        
+        switch (direction) {
+            case NORTH:
+                position1 = new int[] { position[0], position[1] + player.getRange() };
+                break;
+            case SOUTH:
+                position1 = new int[] { position[0], position[1] - player.getRange() };
+                break;
+            case WEST:
+                position1 = new int[] { position[0] - player.getRange(), position[1] };
+                break;
+            default:
+                position1 = new int[] { position[0] + player.getRange(), position[1] };
+                break;
+        }
+
+        return position1;
+    }
 
     public enum Status {
         SUCCESSFUL, OBSTRUCTED, OUTSIDE_WORLD

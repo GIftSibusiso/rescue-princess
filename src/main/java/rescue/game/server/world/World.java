@@ -18,7 +18,7 @@ public class World {
     public int HEIGHT, WIDTH;
     public List<PlayersConnection> PLAYERS;
     public Princess PRINCESS;
-    public Obstacle[] obstacles = { new Obstacle(0, 0, 5, 5) };
+    public Obstacle[] obstacles = { new Obstacle(0, 0, 5, 5), new Obstacle(10, 0, 5, 5) };
     
     public World (List<PlayersConnection> players) {
         configWorld();

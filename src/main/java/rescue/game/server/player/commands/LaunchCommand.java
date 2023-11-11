@@ -57,7 +57,6 @@ public class LaunchCommand extends Commands{
                 player.setRange(23);
                 player.setReloadTime(7);
                 player.setEffect(30);
-
         }
 
         player.setHealth(100);
