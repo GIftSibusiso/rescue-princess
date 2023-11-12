@@ -29,6 +29,7 @@ public class LookCommand extends Commands {
 
         displayObstacle(world, player);
         displayPlayers(world, player);
+        displayWorld(world, player);
 
         response.put("result", "OK");
         response.put("position", player.getPosition());
@@ -70,5 +71,17 @@ public class LookCommand extends Commands {
         }
 
         data.put("players", newPlayersFormat);
+    }
+
+    private void displayWorld(World world, Player player) {
+        JSONObject distance = new JSONObject();
+
+        distance.put( "North", world.HEIGHT - player.getPosition()[1] );
+        distance.put( "South", player.getPosition()[1] );
+        distance.put( "West", player.getPosition()[0] );
+        distance.put( "East", world.WIDTH - player.getPosition()[0] );
+
+        data.put("wall distance", distance);
+
     }
 }
