@@ -25,10 +25,14 @@ public class TurnCommand extends Commands{
         } else {
             player.getDirection().updateDirection(player, true);
         }
+
+        JSONObject data = new JSONObject();
+        data.put("position", player.getPosition());
+        data.put("direction", player.getDirection());
     
         response.put("result", "OK");
         response.put("message", "Player moved " + arguments.get(0));
-        response.put("data", Additions.addData(player));
+        response.put("data", data);
         return this;
     }
 

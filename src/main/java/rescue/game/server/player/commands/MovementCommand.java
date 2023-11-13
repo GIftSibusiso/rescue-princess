@@ -29,6 +29,7 @@ public class MovementCommand extends Commands{
         if (arguments.size()!=1 || !Additions.isInt(arguments.get(0))) {
             return new InvalidCommand("Expected integer as argument").doCommand(world, player);
         }
+        JSONObject data = new JSONObject();
         Direction.Status status;
 
         if ( backCommand ) {
@@ -39,9 +40,12 @@ public class MovementCommand extends Commands{
                     .updatePosition(world, player, Integer.parseInt(arguments.get(0)));
         }
 
+        data.put("position", player.getPosition());
+        data.put("direction", player.getDirection());
+
         response.put("result", "OK");
         response.put("message", getMessage(status));
-        response.put("data", Additions.addData(player));
+        response.put("data", data);
 
         if ( world.PRINCESS.displacement(player.getPosition()) <= 10 ) {
             response.put("message", "You've found the Princess :)");
