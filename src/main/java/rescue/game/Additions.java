@@ -58,4 +58,10 @@ public class Additions {
 
         return data;
     }
+
+    public static int getDistance(int[] position, int[] position1) {
+        return (int) Math.sqrt(
+            Math.pow(position[0] - position1[0], 2) - Math.pow(position[1] - position1[1], 2)
+        );
+    }
 }

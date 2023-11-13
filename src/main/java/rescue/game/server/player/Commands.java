@@ -28,6 +28,8 @@ public abstract class Commands{
                 return new StateCommand();
             case "LOOK":
                 return new LookCommand(arguments);
+            case "FIRE":
+                return new FireCommand(arguments);
             default:
                 return new InvalidCommand("'" +command+"' command does not exist");
         }
