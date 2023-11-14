@@ -14,6 +14,10 @@ public abstract class Command {
     public static Command processCommand(String command, String[] arguments) {
 
         switch (command.toUpperCase()) {
+            case "OFF":
+            case "EXIT":
+            case "QUIT":
+                return new QuitCommand(arguments);
             case "PLAYERS":
                 return new PlayersCommand(arguments);
             default:

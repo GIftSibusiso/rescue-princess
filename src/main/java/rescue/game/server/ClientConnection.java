@@ -12,7 +12,7 @@ import rescue.game.server.world.World;
 
 public class ClientConnection implements Runnable {
     public List<PlayersConnection> players = new ArrayList<>();
-    ServerSocket server;
+    public ServerSocket server;
     public boolean playerConnection = true;
     public World WORLD;
 
@@ -24,7 +24,6 @@ public class ClientConnection implements Runnable {
     @Override
     public void run() {
         connectClient();
-        System.out.println("Connection closed");
     }
     
     private void connectClient() {

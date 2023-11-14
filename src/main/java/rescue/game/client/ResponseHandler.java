@@ -28,6 +28,9 @@ public class ResponseHandler implements Runnable {
             }
         } catch (IOException ignore) {
             running = false;
+        } catch ( IllegalArgumentException e ) {
+            System.out.println("\nServer shut down");
+            running = false;
         }
         
     }

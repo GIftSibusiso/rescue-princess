@@ -32,7 +32,7 @@ public class PlayersConnection implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (socket.isConnected()) {
                 Map<String, Object> request = mapper.readValue(in.readLine(), Map.class);
 
                 Commands command = Commands.processRequest(
@@ -54,6 +54,10 @@ public class PlayersConnection implements Runnable {
 
     public PrintWriter getOutputStream() {
         return out;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
     
 }

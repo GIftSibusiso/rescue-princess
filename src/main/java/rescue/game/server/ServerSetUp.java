@@ -13,7 +13,7 @@ public class ServerSetUp {
     private ServerSocket server;
     private boolean serverActive = false;
     private ClientConnection clientConnections;
-    Thread thread;
+    public Thread thread;
 
     public ServerSetUp( int Port ) {
         this.Port = Port;
@@ -72,11 +72,11 @@ public class ServerSetUp {
     }
 
     private void serverCommand() {
-        while (serverActive) {
+        while (clientConnections.playerConnection) {
             String cmd = Additions.getInput("", "-> ");
             String[] command = cmd.split(" ");
 
-            Command.processCommand(command[0], getArgs(command)).doCommand(clientConnections);;
+            Command.processCommand(command[0], getArgs(command)).doCommand(clientConnections);
         }
     }
 
