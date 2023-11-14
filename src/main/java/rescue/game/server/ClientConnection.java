@@ -37,9 +37,6 @@ public class ClientConnection implements Runnable {
             }
         } catch ( SocketException e ) {
             System.out.println("Server no longer active");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } catch (IOException ignore) {  }
     }
 }

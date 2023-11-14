@@ -20,6 +20,8 @@ public abstract class Command {
                 return new QuitCommand(arguments);
             case "PLAYERS":
                 return new PlayersCommand(arguments);
+            case "WORLD":
+                return new WorldCommand(arguments);
             default:
                 return new InvalidCommand("Command does not exist");
         }
