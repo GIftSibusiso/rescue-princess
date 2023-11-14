@@ -22,6 +22,8 @@ public abstract class Command {
                 return new PlayersCommand(arguments);
             case "WORLD":
                 return new WorldCommand(arguments);
+            case "OBSTACLE":
+                return new CreateObstacle(arguments);
             default:
                 return new InvalidCommand("Command does not exist");
         }

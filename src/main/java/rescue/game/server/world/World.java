@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public class World {
     public int HEIGHT, WIDTH;
     public List<PlayersConnection> PLAYERS;
     public Princess PRINCESS;
-    public Obstacle[] obstacles = { new Obstacle(0, 0, 5, 5), new Obstacle(10, 0, 5, 5) };
+    public List<Obstacle> obstacles = new ArrayList<>();
     
     public World (List<PlayersConnection> players) {
         configWorld();
@@ -28,6 +29,8 @@ public class World {
 
     private void configWorld()  {
         String filename = "dimensions.json";
+        obstacles.add(new Obstacle(0, 0, 5, 5));
+        obstacles.add(new Obstacle(10, 0, 5, 5));
 
         try {
             StringBuilder jsonString = new StringBuilder();
