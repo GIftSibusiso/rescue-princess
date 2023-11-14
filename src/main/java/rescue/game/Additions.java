@@ -64,4 +64,10 @@ public class Additions {
             Math.pow(position[0] - position1[0], 2) - Math.pow(position[1] - position1[1], 2)
         );
     }
+
+    public static void sleep(int seconds) {
+        try {
+            Thread.sleep(seconds*1000);
+        } catch (InterruptedException ignore) {  }
+    }
 }

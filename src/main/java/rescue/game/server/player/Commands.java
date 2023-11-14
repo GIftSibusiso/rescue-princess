@@ -35,6 +35,8 @@ public abstract class Commands{
                 return new LookCommand(arguments);
             case "FIRE":
                 return new FireCommand(arguments);
+            case "RELOAD":
+                return new ReloadCommand(arguments);
             default:
                 return new InvalidCommand("'" +command+"' command does not exist");
         }

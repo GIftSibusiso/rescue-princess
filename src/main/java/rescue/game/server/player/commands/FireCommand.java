@@ -28,6 +28,19 @@ public class FireCommand extends Commands {
             return new InvalidCommand("Not expecting arguments").doCommand(world, player);
         }
         JSONObject data = new JSONObject();
+        int shots = player.getShots() - 1;
+
+        if ( shots < 0 ) {
+            response.put("result", "OK");
+            response.put("message", "Out of armor");
+            data.put("shots", player.getShots());
+            data.put("realoadTime", player.getReloadTime());
+            response.put("data", data);
+            return this;
+        }
+
+        player.setShots(shots);
+        data.put("shots", player.getShots());
 
         List<Player> players = Direction.seePlayers(world, player, player.getDirection());
         Player playerShot = closestPlayer(player, players);
@@ -39,7 +52,7 @@ public class FireCommand extends Commands {
             data.put("message", "No one was shot");
         } else if ( 
             ( obstacles.size() == 0 && players.size() != 0 ) || (( playerDistance < obstacleDistance ) 
-            && ( obstacles.size() != 0 ))
+            && ( obstacles.size() != 0 ) && ( players.size() != 0 ))
          ) { 
             data.put("name", playerShot.getName());
             data.put("position", playerShot.getPosition());
@@ -47,7 +60,7 @@ public class FireCommand extends Commands {
             alertPlayer(world, player, playerShot);
         } else if ( 
             ( obstacles.size() != 0 && players.size() == 0 ) || (( playerDistance > obstacleDistance ) &&
-            ( players.size() != 0 ))
+            ( players.size() != 0 ) && ( obstacles.size() != 0 ))
         ) {
             Obstacle[] obstacle = {obstacleShot};
             data.put("obstacle", obstacle);
@@ -129,8 +142,6 @@ public class FireCommand extends Commands {
                 out.flush();
             }
         }
-        
-        
     }
     
 }
