@@ -12,12 +12,11 @@ import rescue.game.server.world.Obstacle;
 import rescue.game.server.world.World;
 
 public class LookCommand extends Commands {
-    private List<String> arguments ;
     private final JSONObject response = new JSONObject();
     final JSONObject data = new JSONObject();
 
     public LookCommand( List<String> args ) {
-        arguments = args;
+        super(args);
     }
 
     @Override

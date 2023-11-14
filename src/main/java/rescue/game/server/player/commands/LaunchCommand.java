@@ -11,10 +11,9 @@ import rescue.game.server.world.World;
 
 public class LaunchCommand extends Commands{
     private final JSONObject response = new JSONObject();
-    private List<String> arguments;
 
     public LaunchCommand( List<String> args ) {
-        arguments = args;
+        super(args);
     }
 
     @Override
@@ -24,6 +23,7 @@ public class LaunchCommand extends Commands{
         }
         // Make command recognise that robot is launched and assign given name to player 
         configPlayer(arguments.get(0), player);
+        player.setModel(arguments.get(0));
         player.setPosition(world.launchPlayer());
         player.setDirection(world.getRandomDirection());
         player.setName(arguments.get(1));
@@ -39,7 +39,7 @@ public class LaunchCommand extends Commands{
         return response;
     }
 
-    private void configPlayer(String type, Player player) {
+    private static void configPlayer(String type, Player player) {
         // "  1. Shot gun\n  2. Sniper\n  3. Bazooka\nYour choice"
         switch(type) {
             case "1":
@@ -47,11 +47,13 @@ public class LaunchCommand extends Commands{
                 player.setRange(15);
                 player.setReloadTime(4);
                 player.setEffect(10);
+                break;
             case "2":
                 player.setShots(3);
                 player.setRange(40);
                 player.setReloadTime(10);
                 player.setEffect(50);
+                break;
             case "3":
                 player.setShots(6);
                 player.setRange(23);
@@ -60,6 +62,12 @@ public class LaunchCommand extends Commands{
         }
 
         player.setHealth(100);
+    }
+
+    public static void reconfigurePlayer(World world, Player player) {
+        configPlayer(player.getModel(), player);
+        player.setPosition(world.launchPlayer());
+        player.setDirection(world.getRandomDirection());
     }
     
 }

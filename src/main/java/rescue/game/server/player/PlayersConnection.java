@@ -51,5 +51,9 @@ public class PlayersConnection implements Runnable {
     public Player getPlayer() {
         return player;
     }
+
+    public PrintWriter getOutputStream() {
+        return out;
+    }
     
 }

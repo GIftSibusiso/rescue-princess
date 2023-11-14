@@ -8,6 +8,11 @@ import rescue.game.server.player.commands.*;
 import rescue.game.server.world.World;
 
 public abstract class Commands{
+    public List<String> arguments;
+
+    public Commands( List<String> args ) {
+        arguments = args;
+    }
 
     public abstract Commands doCommand( World world, Player player );
 
@@ -25,7 +30,7 @@ public abstract class Commands{
             case "TURN":
                 return new TurnCommand(arguments);
             case "STATE":
-                return new StateCommand();
+                return new StateCommand(arguments);
             case "LOOK":
                 return new LookCommand(arguments);
             case "FIRE":

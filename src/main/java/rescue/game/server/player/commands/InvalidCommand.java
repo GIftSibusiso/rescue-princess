@@ -1,5 +1,7 @@
 package rescue.game.server.player.commands;
 
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 
 import rescue.game.server.player.Commands;
@@ -11,6 +13,7 @@ public class InvalidCommand extends Commands{
     private String message;
 
     public InvalidCommand( String message ) {
+        super(new ArrayList<String>());
         this.message = message;
     }
 

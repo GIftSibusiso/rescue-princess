@@ -1,5 +1,7 @@
 package rescue.game.server.player.commands;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
 import rescue.game.Additions;
@@ -9,6 +11,10 @@ import rescue.game.server.world.World;
 
 public class StateCommand extends Commands{
     private final JSONObject response = new JSONObject();
+
+    public StateCommand(List<String> args) {
+        super(args);
+    }
 
     @Override
     public Commands doCommand(World world, Player player) {

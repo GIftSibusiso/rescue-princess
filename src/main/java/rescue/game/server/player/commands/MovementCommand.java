@@ -12,16 +12,15 @@ import rescue.game.server.world.World;
 
 public class MovementCommand extends Commands{
     private final JSONObject response = new JSONObject();
-    private List<String> arguments;
     private boolean backCommand = false;
 
     public MovementCommand(List<String> args) {
-        arguments = args;
+        super(args);
     }
 
     public MovementCommand(List<String> args, boolean backCommand) {
+        super(args);
         this.backCommand = backCommand;
-        arguments = args;
     }
 
     @Override

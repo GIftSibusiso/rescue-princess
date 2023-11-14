@@ -3,7 +3,7 @@ package rescue.game.server.player;
 import rescue.game.server.world.Direction;
 
 public class Player {
-    private String name = null;
+    private String name = null, model;
     private final int[] position = new int[2];
     private Direction direction;
     private int shots, range, reloadTime, effect, health;
@@ -53,6 +53,10 @@ public class Player {
         this.health = health;
     }
 
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -71,5 +75,9 @@ public class Player {
 
     public int getEffect() {
         return effect;
+    }
+
+    public String getModel() {
+        return model;
     }
 }
