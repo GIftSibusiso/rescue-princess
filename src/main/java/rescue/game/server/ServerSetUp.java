@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import rescue.game.Additions;
+import rescue.game.server.Commands.Command;
 
 public class ServerSetUp {
     private int Port; 
@@ -73,10 +74,19 @@ public class ServerSetUp {
     private void serverCommand() {
         while (serverActive) {
             String cmd = Additions.getInput("", "-> ");
+            String[] command = cmd.split(" ");
 
-            if ( cmd.equals("quit") ) {
-                stopServer();
-            }
+            Command.processCommand(command[0], getArgs(command)).doCommand(clientConnections);;
         }
+    }
+
+    private String[] getArgs(String[] input) {
+        String[] args = new String[input.length-1];
+
+        for ( int i=1; i<input.length; i++ ) {
+            args[i-1] = input[i];
+        }
+
+        return args;
     }
 }

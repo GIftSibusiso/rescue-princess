@@ -11,7 +11,7 @@ import rescue.game.server.player.PlayersConnection;
 import rescue.game.server.world.World;
 
 public class ClientConnection implements Runnable {
-    List<PlayersConnection> players = new ArrayList<>();
+    public List<PlayersConnection> players = new ArrayList<>();
     ServerSocket server;
     public boolean playerConnection = true;
     public World WORLD;
