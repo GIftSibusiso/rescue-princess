@@ -37,6 +37,8 @@ public abstract class Commands{
                 return new FireCommand(arguments);
             case "RELOAD":
                 return new ReloadCommand(arguments);
+            case "REPAIR":
+                return new RepairCommand(arguments);
             default:
                 return new InvalidCommand("'" +command+"' command does not exist");
         }
