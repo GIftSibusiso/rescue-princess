@@ -42,6 +42,7 @@ public class ReloadCommand extends Commands {
         }
 
         response.put("result", "OK");
+        response.put("command", "reload");
         response.put("message", "Reload successful");
         data.put("shots", player.getShots());
         data.put("reloadTime", player.getReloadTime());
@@ -58,6 +59,7 @@ public class ReloadCommand extends Commands {
     private void alertPlayer(World world, Player player) {
         JSONObject alert = new JSONObject();
         alert.put("result", "ALERT");
+        alert.put("command", "reload");
         alert.put("message", "Player reloading");
         alert.put("reloadTime", player.getReloadTime());
 

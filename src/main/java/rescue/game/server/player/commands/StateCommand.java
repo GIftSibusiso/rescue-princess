@@ -19,6 +19,7 @@ public class StateCommand extends Commands{
     @Override
     public Commands doCommand(World world, Player player) {
         response.put("result", "OK");
+        response.put("command", "state");
         response.put("displacement", world.PRINCESS.displacement(player.getPosition()));
         response.put("data", Additions.addData(player));
 

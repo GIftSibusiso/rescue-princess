@@ -34,6 +34,7 @@ public class RepairCommand extends Commands {
         }
 
         response.put("result", "OK");
+        response.put("command", "repair");
         response.put("message", "repair successful");
         data.put("health", player.getHealth());
         response.put("data", data);
@@ -48,6 +49,7 @@ public class RepairCommand extends Commands {
     private void alertPlayer(World world, Player player) {
         JSONObject alert = new JSONObject();
         alert.put("result", "ALERT");
+        alert.put("command", "repair");
         alert.put("message", "Player repairing");
         alert.put("repairTime", 3);
 

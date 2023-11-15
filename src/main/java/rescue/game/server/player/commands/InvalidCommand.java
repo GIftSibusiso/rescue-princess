@@ -20,6 +20,7 @@ public class InvalidCommand extends Commands{
     @Override
     public InvalidCommand doCommand(World world, Player player) {
         response.put("result", "ERROR");
+        response.put("command", "invalid");
         response.put("message", message);
         return this;
     }

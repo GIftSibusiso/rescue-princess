@@ -29,9 +29,9 @@ public class FireCommand extends Commands {
         }
         JSONObject data = new JSONObject();
         int shots = player.getShots() - 1;
+        response.put("command", "fire");
 
         if ( shots < 0 ) {
-            response.put("command", "fire");
             response.put("result", "OK");
             response.put("message", "Out of armor");
             data.put("shots", player.getShots());

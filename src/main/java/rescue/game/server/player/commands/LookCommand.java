@@ -31,6 +31,7 @@ public class LookCommand extends Commands {
         displayWorld(world, player);
 
         response.put("result", "OK");
+        response.put("command", "look");
         response.put("position", player.getPosition());
         response.put("data", data);
 
