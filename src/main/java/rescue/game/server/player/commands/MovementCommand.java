@@ -43,6 +43,7 @@ public class MovementCommand extends Commands{
         data.put("direction", player.getDirection());
 
         response.put("result", "OK");
+        response.put("command", "movement");
         response.put("message", getMessage(status));
         response.put("data", data);
 

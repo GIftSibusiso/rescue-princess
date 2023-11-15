@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import rescue.game.Additions;
 import rescue.game.server.player.Commands;
 import rescue.game.server.player.Player;
+import rescue.game.server.player.PlayersConnection;
 import rescue.game.server.world.World;
 
 public class LaunchCommand extends Commands{
@@ -20,8 +21,13 @@ public class LaunchCommand extends Commands{
     public Commands doCommand(World world, Player player) {
         if (player.getName() != null) {
             return new InvalidCommand("Player already in world").doCommand(world, player);
+        } else if ( nameTaken(world, player, arguments.get(1)) ) {
+            return new InvalidCommand("Name is taken").doCommand(world, player);
         }
-        // Make command recognise that robot is launched and assign given name to player 
+        JSONObject worldDimensions = new JSONObject();
+        worldDimensions.put("height",world.HEIGHT);
+        worldDimensions.put("width",world.WIDTH);
+        
         showPlayer(world, player);
         configPlayer(arguments.get(0), player);
         player.setModel(arguments.get(0));
@@ -30,8 +36,10 @@ public class LaunchCommand extends Commands{
         player.setName(arguments.get(1));player.playerGUI.show();
 
         response.put("result", "OK");
+        response.put("command", "launch");
         response.put("message", "Player launched to world");
         response.put("data", Additions.addData(player));
+        response.put("world", worldDimensions);
         return this;
     }
 
@@ -76,6 +84,19 @@ public class LaunchCommand extends Commands{
         player.playerGUI.up();
         player.playerGUI.shape("triangle");
         player.playerGUI.shapeSize(5, 5);
+    }
+
+    private boolean nameTaken(World world, Player player, String name) {
+        for ( PlayersConnection playersConnection : world.PLAYERS ) {
+            if ( 
+                !playersConnection.getPlayer().equals(player) &&
+                playersConnection.getPlayer().getName().equalsIgnoreCase(name)
+             ) {
+                return true;
+            }
+        }
+
+        return false;
     }
     
 }

@@ -31,6 +31,7 @@ public class TurnCommand extends Commands{
         data.put("direction", player.getDirection());
     
         response.put("result", "OK");
+        response.put("command", "turn");
         response.put("message", "Player moved " + arguments.get(0));
         response.put("data", data);
         return this;

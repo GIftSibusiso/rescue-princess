@@ -31,6 +31,7 @@ public class FireCommand extends Commands {
         int shots = player.getShots() - 1;
 
         if ( shots < 0 ) {
+            response.put("command", "fire");
             response.put("result", "OK");
             response.put("message", "Out of armor");
             data.put("shots", player.getShots());

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import rescue.game.Additions;
+import rescue.game.turtle.Turtle;
 
 public class ClientServerConnection {
     private ResponseHandler responseHandler;
@@ -25,6 +26,7 @@ public class ClientServerConnection {
     private PrintWriter out;
     private String name;
     private BufferedReader in;
+    private Turtle player;
 
     public ClientServerConnection( int port, String ip ) {
         
@@ -77,10 +79,12 @@ public class ClientServerConnection {
         JsonNode node = mapper.readTree(in.readLine());
 
         if ( node.get("result").asText().equals("ERROR") ) {
+            System.out.println(node.toPrettyString());
             launchPlayer();
         } else {
+            showWorld(node);
             System.out.println(node.toPrettyString());
-            responseHandler = new ResponseHandler(socket);
+            responseHandler = new ResponseHandler(socket, player);
             Thread thread = new Thread(responseHandler);
             thread.start();
         }
@@ -121,6 +125,45 @@ public class ClientServerConnection {
         }
 
         return args;
+    }
+
+    private void showWorld(JsonNode node) {
+        int width = node.get("world").get("width").asInt(),
+            height = node.get("world").get("height").asInt();
+        player = new Turtle(-200, -200);
+        player.hide();
+        player.speed(0);
+
+        player.forward(width);
+        player.left(90);
+        player.forward(height);
+        player.left(90);
+        player.forward(width);
+        player.left(90);
+        player.forward(height);
+
+        player.up();
+        player.setPosition(
+            node.get("data").get("position").get(0).asInt() - 200,
+            node.get("data").get("position").get(1).asInt() - 200
+        );
+        player.setDirection(directionMapper(node.get("data").get("direction").asText()));
+        player.shape("triangle");
+        player.shapeSize(5, 5);
+        player.show();
+    }
+
+    public static int directionMapper( String direction ) {
+        switch (direction) {
+            case "NORTH":
+                return 90;
+            case "WEST":
+                return 180;
+            case "SOUTH":
+                return 270;
+            default:
+                return 0;
+        }
     }
 
     public static void main(String[] args) throws UnknownHostException, IOException
