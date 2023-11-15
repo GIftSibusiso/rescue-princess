@@ -14,11 +14,14 @@ public class ResponseHandler implements Runnable {
     private Socket socket;
     public boolean running = false;
     private Turtle player;
+    private Turtle pen;
 
     public ResponseHandler(Socket socket, Turtle player) {
         this.socket = socket;
         running = true;
         this.player = player;
+        pen = player.clone();
+        pen.hide();
     }
     
     @Override
@@ -40,6 +43,8 @@ public class ResponseHandler implements Runnable {
     }
 
     private void updateGUI(JsonNode node) {
+        if ( !node.get("command").isNull() )
+
         switch ( node.get("command").asText() ) {
             case "movement":
                 player.setPosition(
@@ -52,6 +57,37 @@ public class ResponseHandler implements Runnable {
                     ClientServerConnection
                     .directionMapper(node.get("data").get("direction").asText())
                 );
+                break;
+            case "look":
+                drawObtacles(node.get("data").get("obstacles"));
+        }
+    }
+
+    private void drawObtacles( JsonNode obstacles ) {
+        pen.up();
+        pen.penColor("red");
+        int count = 0;
+        while ( obstacles.get(count) != null ) {
+            JsonNode obstacle = obstacles.get(count);
+            int width = obstacle.get("width").asInt(),
+                length = obstacle.get("length").asInt();
+            pen.setPosition(
+                obstacle.get("x").asInt()-200, 
+                obstacle.get("y").asInt()-200
+            );
+            pen.setDirection(0);
+            pen.down();
+
+            pen.forward(width);
+            pen.left(90);
+            pen.forward(length);
+            pen.left(90);
+            pen.forward(width);
+            pen.left(90);
+            pen.forward(length);
+
+            pen.up();
+            count++;
         }
     }
 }
