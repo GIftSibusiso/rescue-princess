@@ -25,6 +25,7 @@ public class QuitCommand extends Command{
             }
 
             try {
+                clientConnection.WORLD.draw.exit();
                 clientConnection.server.close();
             } catch (IOException ignore) { }
         }

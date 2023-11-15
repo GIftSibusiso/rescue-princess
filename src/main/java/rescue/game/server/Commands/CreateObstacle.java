@@ -37,6 +37,7 @@ public class CreateObstacle extends Command {
                 }
 
             } 
+            clientConnection.WORLD.updateObstacle(obstacle);
             System.out.println("Obstacle added");
         }
     }

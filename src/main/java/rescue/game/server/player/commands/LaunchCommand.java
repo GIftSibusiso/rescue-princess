@@ -22,11 +22,12 @@ public class LaunchCommand extends Commands{
             return new InvalidCommand("Player already in world").doCommand(world, player);
         }
         // Make command recognise that robot is launched and assign given name to player 
+        showPlayer(world, player);
         configPlayer(arguments.get(0), player);
         player.setModel(arguments.get(0));
         player.setPosition(world.launchPlayer());
         player.setDirection(world.getRandomDirection());
-        player.setName(arguments.get(1));
+        player.setName(arguments.get(1));player.playerGUI.show();
 
         response.put("result", "OK");
         response.put("message", "Player launched to world");
@@ -68,6 +69,13 @@ public class LaunchCommand extends Commands{
         configPlayer(player.getModel(), player);
         player.setPosition(world.launchPlayer());
         player.setDirection(world.getRandomDirection());
+    }
+
+    private void showPlayer( World world, Player player ) {
+        player.playerGUI = world.draw.clone();
+        player.playerGUI.up();
+        player.playerGUI.shape("triangle");
+        player.playerGUI.shapeSize(5, 5);
     }
     
 }

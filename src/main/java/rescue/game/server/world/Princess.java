@@ -2,6 +2,8 @@ package rescue.game.server.world;
 
 import java.util.Random;
 
+import rescue.game.turtle.Turtle;
+
 public class Princess {
     private int[] position;
     private World world;
@@ -10,6 +12,7 @@ public class Princess {
     public Princess(World world) {
         this.world = world;
         generatePrincessPosition();
+        showPrincess();
     }
 
     private void generatePrincessPosition() {
@@ -29,5 +32,14 @@ public class Princess {
 
     public int[] getPosition() {
         return position;
+    }
+
+    private void showPrincess() {
+        Turtle princess = world.draw.clone();
+        princess.up();
+        princess.setPosition(position[0]-200, position[1]-200);
+        princess.shape("circle");
+        princess.shapeSize(5, 5);
+        princess.show();
     }
 }

@@ -1,12 +1,26 @@
 package rescue.game.server.player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rescue.game.server.world.Direction;
+import rescue.game.turtle.Turtle;
 
 public class Player {
     private String name = null, model;
     private final int[] position = new int[2];
     private Direction direction;
     private int shots, range, reloadTime, effect, health;
+    private Map<Direction, Integer> directionToDegrees = new HashMap<>();
+    
+    public Turtle playerGUI;
+
+    public Player() {
+        directionToDegrees.put(Direction.NORTH, 90);
+        directionToDegrees.put(Direction.WEST, 180);
+        directionToDegrees.put(Direction.SOUTH, 270);
+        directionToDegrees.put(Direction.EAST, 0);
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -19,6 +33,7 @@ public class Player {
     public void setPosition(int[] newPosition) {
         position[0] = newPosition[0];
         position[1] = newPosition[1];
+        playerGUI.setPosition(newPosition[0]-200, newPosition[1]-200);
     }
 
     public int[] getPosition() {
@@ -27,6 +42,7 @@ public class Player {
 
     public void setDirection(Direction newDirection) {
         direction = newDirection;
+        playerGUI.setDirection(directionToDegrees.get(newDirection));
     }
 
     public Direction getDirection() {
