@@ -26,4 +26,8 @@ public class Princess {
 
         return (int) Math.sqrt(Math.pow(y - y1, 2) + Math.pow(x - x1, 2));
     }
+
+    public int[] getPosition() {
+        return position;
+    }
 }

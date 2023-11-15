@@ -17,7 +17,9 @@ public class WorldCommand extends Command {
         System.out.println(
             "World dimensions:\n"+
             "  * Width = " + world.WIDTH + "\n" +
-            "  * Height = " + world.HEIGHT + "\n"
+            "  * Height = " + world.HEIGHT + "\n" +
+            "  * Princess position: (" + world.PRINCESS.getPosition()[0] + 
+            ", " + world.PRINCESS.getPosition()[1] + ")\n"
         );
 
         System.out.println("\nWorls obstacles:");

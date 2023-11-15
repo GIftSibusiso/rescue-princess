@@ -24,6 +24,8 @@ public abstract class Command {
                 return new WorldCommand(arguments);
             case "OBSTACLE":
                 return new CreateObstacle(arguments);
+            case "REMOVE":
+                return new RemoveCommand(arguments);
             default:
                 return new InvalidCommand("Command does not exist");
         }
