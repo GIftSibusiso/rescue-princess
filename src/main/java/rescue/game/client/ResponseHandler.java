@@ -119,6 +119,7 @@ public class ResponseHandler implements Runnable {
             );
             player1.shape("triangle");
             player1.shapeSize(5, 5);
+            player1.outlineColor("red");
             players.add(player1);
             count++;
         }

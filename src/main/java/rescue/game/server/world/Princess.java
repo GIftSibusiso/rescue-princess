@@ -18,8 +18,6 @@ public class Princess {
     private void generatePrincessPosition() {
         int x = random.nextInt(world.WIDTH),
             y = -random.nextInt((int) (world.HEIGHT*0.2)) + world.HEIGHT;
-        System.out.println("x = " + x);
-        System.out.println("y = " + y);
         position = new int[] {x, y};
     }
 
@@ -39,7 +37,8 @@ public class Princess {
         princess.up();
         princess.setPosition(position[0]-200, position[1]-200);
         princess.shape("circle");
-        princess.shapeSize(5, 5);
+        princess.shapeSize(7, 7);
+        princess.outlineColor("orange");
         princess.show();
     }
 }

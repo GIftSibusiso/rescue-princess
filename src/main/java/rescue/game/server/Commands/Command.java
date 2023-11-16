@@ -26,6 +26,12 @@ public abstract class Command {
                 return new CreateObstacle(arguments);
             case "REMOVE":
                 return new RemoveCommand(arguments);
+            case "OBSTACLES":
+                return new ObstaclesCommand(arguments);
+            case "HELP":
+                return new HelpCommand(arguments);
+            case "PRINCESS":
+                return new PrincessCommand(arguments);
             default:
                 return new InvalidCommand("Command does not exist");
         }

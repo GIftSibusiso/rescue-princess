@@ -22,6 +22,7 @@ public class RemoveCommand extends Command {
             for ( PlayersConnection playersConnection : clientConnection.players ) {
                 if ( playersConnection.getPlayer().getName().equalsIgnoreCase(arguments[0]) ) {
                     try {
+                        playersConnection.getPlayer().playerGUI.hide();
                         playersConnection.getSocket().close();
                     } catch (IOException e) {
                         System.out.println("Socket closed");

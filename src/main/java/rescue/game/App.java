@@ -3,7 +3,6 @@ package rescue.game;
 import java.io.IOException;
 
 import rescue.game.server.ServerSetUp;
-import rescue.game.turtle.Turtle;
 
 /**
  * Hello world!
