@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -15,6 +17,7 @@ public class ResponseHandler implements Runnable {
     public boolean running = false;
     private Turtle player;
     private Turtle pen;
+    private List<Turtle> players = new ArrayList<>();
 
     public ResponseHandler(Socket socket, Turtle player) {
         this.socket = socket;
@@ -45,6 +48,12 @@ public class ResponseHandler implements Runnable {
     private void updateGUI(JsonNode node) {
         if ( !node.get("command").isNull() )
 
+        if (players.size() != 0) {
+            for ( Turtle turtle: players ) {
+                turtle.hide();
+            }
+            players = new ArrayList<>();
+        }
         switch ( node.get("command").asText() ) {
             case "movement":
                 player.setPosition(
@@ -60,6 +69,7 @@ public class ResponseHandler implements Runnable {
                 break;
             case "look":
                 drawObtacles(node.get("data").get("obstacles"));
+                drawPlayers(node.get("data").get("players"));
         }
     }
 
@@ -87,6 +97,26 @@ public class ResponseHandler implements Runnable {
             pen.forward(length);
 
             pen.up();
+            count++;
+        }
+    }
+
+    private void drawPlayers(JsonNode node) {
+        int count = 0;
+
+        while ( node.get(count) != null ) {
+            JsonNode playersAtt = node.get(count);
+            Turtle player1 = player.clone();
+            player1.setPosition(
+                playersAtt.get("position").get(0).asInt()-200,
+                playersAtt.get("position").get(1).asInt()-200
+            );
+            player1.setDirection(
+                ClientServerConnection.directionMapper(playersAtt.get("direction").asText())
+            );
+            player1.shape("triangle");
+            player1.shapeSize(5, 5);
+            players.add(player1);
             count++;
         }
     }
