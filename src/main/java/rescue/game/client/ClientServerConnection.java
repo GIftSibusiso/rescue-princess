@@ -54,11 +54,16 @@ public class ClientServerConnection {
     }
 
     private void makeRequest() throws IOException {
+        welcomeMessage();
         launchPlayer();
         String playerCMD;
 
         while ( responseHandler.running ) {
             playerCMD = Additions.getInput(name + " command");
+            if (playerCMD.equalsIgnoreCase("help")) {
+                validCommands();
+                continue;
+            }
             sendRequest(playerCMD);
         }
 
@@ -84,7 +89,7 @@ public class ClientServerConnection {
         } else {
             showWorld(node);
             System.out.println(node.toPrettyString());
-            responseHandler = new ResponseHandler(socket, player);
+            responseHandler = new ResponseHandler(socket, player, name);
             Thread thread = new Thread(responseHandler);
             thread.start();
         }
@@ -164,6 +169,46 @@ public class ClientServerConnection {
             default:
                 return 0;
         }
+    }
+
+    private void welcomeMessage() {
+        System.out.println(
+            "_-".repeat(25) + "* RESCUE PRINCESS *" + "-_".repeat(25) + "\n" +
+            "\nWelcome to the exciting adventure of \"Rescue Princess\"!\n\n" +
+            
+            "In this exciting game, you'll navigate through a maze using a graphic interface " +
+            "to find the princess. The maze is initially empty, but as you encounter obstacles " +
+            "or other players, you can use the 'look' command to see them. Once you've seen " +
+            "an obstacle it won't disappear, so you can use your observations to find your way around.\n\n" +
+
+            "You start the game with 100% health. If you encounter another player and get shot " +
+            "your health drops, if it reaches zero you'll be reincarnated at a different location in the maze.\n\n" +
+
+            "To help you find the princess, you can use the 'state' command to get your displacement " +
+            "form the princess. Displacement is a measure of how far you are from something. The " +
+            "lower your displacement, the closer you are to the princess.\n\n" +
+
+            "The first player to reach the princess with a displacement of less than 10 wins the game!\n"
+        );
+
+        validCommands();
+    }
+
+    private void validCommands() {
+        System.out.println(
+            "Commands:\n" +
+            "  -> forward <steps> = move your player the specified number of steps\n" +
+            "  -> back <steps> = move your player back the specified number of steps\n" +
+            "  -> turn right = turn your robot 90 degrees clockwise\n" +
+            "  -> turn left = turn your robot 90 degrees counter clockwise\n" +
+            "  -> state = to see the condition of your player\n" +
+            "  -> look = to see obstacles and players in your line of sight\n" +
+            "  -> fire = To shoot whoever is in your line of sight\n" +
+            "  -> reload = increment your armor to the initial value" +
+            "  -> repair = increment your health by 10%\n" +
+            "  -> help = to see all valid commands"
+
+        );
     }
 
     public static void main(String[] args) throws UnknownHostException, IOException

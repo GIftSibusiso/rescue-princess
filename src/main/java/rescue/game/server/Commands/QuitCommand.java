@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import rescue.game.server.ClientConnection;
 import rescue.game.server.player.PlayersConnection;
+import rescue.game.turtle.Turtle;
 
 public class QuitCommand extends Command{
 
@@ -25,7 +26,7 @@ public class QuitCommand extends Command{
             }
 
             try {
-                clientConnection.WORLD.draw.exit();
+                Turtle.exit();
                 clientConnection.server.close();
             } catch (IOException ignore) { }
         }

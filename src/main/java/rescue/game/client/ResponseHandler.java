@@ -18,13 +18,15 @@ public class ResponseHandler implements Runnable {
     private Turtle player;
     private Turtle pen;
     private List<Turtle> players = new ArrayList<>();
+    private String name;
 
-    public ResponseHandler(Socket socket, Turtle player) {
+    public ResponseHandler(Socket socket, Turtle player, String name) {
         this.socket = socket;
         running = true;
         this.player = player;
         pen = player.clone();
         pen.hide();
+        this.name = name;
     }
     
     @Override
@@ -33,13 +35,14 @@ public class ResponseHandler implements Runnable {
             while (running) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 JsonNode node = Additions.getMapper().readTree(in.readLine());
-                System.out.println(node.toPrettyString());
+                System.out.println("\n" + node.toPrettyString() + "\n");
                 updateGUI(node);
+                System.out.print(name.toUpperCase() + " command: ");
             }
         } catch (IOException ignore) {
             running = false;
         } catch ( IllegalArgumentException e ) {
-            System.out.println("\nServer shut down");
+            System.out.println("\n  Disconnected from server");
             running = false;
         }
         
