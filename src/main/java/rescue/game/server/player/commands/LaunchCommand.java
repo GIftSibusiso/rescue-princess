@@ -89,6 +89,7 @@ public class LaunchCommand extends Commands{
     private boolean nameTaken(World world, Player player, String name) {
         for ( PlayersConnection playersConnection : world.PLAYERS ) {
             if ( 
+                playersConnection.getPlayer().getName() != null &&
                 !playersConnection.getPlayer().equals(player) &&
                 playersConnection.getPlayer().getName().equalsIgnoreCase(name)
              ) {

@@ -39,13 +39,14 @@ public class ResponseHandler implements Runnable {
                 updateGUI(node);
                 System.out.print(name.toUpperCase() + " command: ");
             }
-        } catch (IOException ignore) {
-            running = false;
+        } catch (IOException ignore) {  
         } catch ( IllegalArgumentException e ) {
             System.out.println("\n  Disconnected from server");
-            running = false;
+        } catch ( NullPointerException e ) {
+            System.out.println("Connection closed");
         }
-        
+        running = false;
+        Turtle.exit();
     }
 
     private void updateGUI(JsonNode node) {

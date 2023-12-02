@@ -20,7 +20,7 @@ public class HelpCommand extends Command {
                 "  -> World: displays the position of the princess and world attributes also shows every obstacle position\n" +
                 "  -> quit: removes every player connected then shuts the server down\n" +
                 "  -> Obstacle <x position> <y position> <length> <width>: create the specified obstacle\n" +
-                "  -> Obstacles <x position> <y position> <length> <width> <UP/DOWN> <number of obstacles>: create trailing obstacles\n" +
+                "  -> Obstacles <x position> <y position> <length> <width> <UP/RIGHT> <number of obstacles>: create trailing obstacles\n" +
                 "  -> Help: shows all valid server commands\n"
             );
         }

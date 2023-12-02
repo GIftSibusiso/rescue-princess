@@ -5,8 +5,10 @@ import java.util.List;
 import org.json.JSONObject;
 
 import rescue.game.Additions;
+import rescue.game.server.Commands.RemoveCommand;
 import rescue.game.server.player.Commands;
 import rescue.game.server.player.Player;
+import rescue.game.server.player.PlayersConnection;
 import rescue.game.server.world.Direction;
 import rescue.game.server.world.World;
 
@@ -45,11 +47,14 @@ public class MovementCommand extends Commands{
         response.put("result", "OK");
         response.put("command", "movement");
         response.put("message", getMessage(status));
-        response.put("data", data);
 
         if ( world.PRINCESS.displacement(player.getPosition()) <= 10 ) {
             response.put("message", "You've found the Princess :)");
+            removeEveryone(world, player.getName());
+            data.put("princess-position", world.PRINCESS.getPosition());
         }
+
+        response.put("data", data);
 
         return this;
     }
@@ -77,5 +82,20 @@ public class MovementCommand extends Commands{
         }
 
         return message;
+    }
+
+    private void removeEveryone( World world, String winnersName ) {
+        JSONObject alert = new JSONObject();
+        alert.put("result", "LOST");
+        alert.put("message", winnersName.toUpperCase() + " found the princess :(");
+        alert.put("princess-location", world.PRINCESS.getPosition());
+
+        for ( PlayersConnection playersConnection: world.PLAYERS ) {
+            if ( !winnersName.equals(playersConnection.getPlayer().getName()) ) {
+                playersConnection.getOutputStream().println(alert);
+                playersConnection.getOutputStream().flush();
+                new RemoveCommand(new String[] { playersConnection.getPlayer().getName() });
+            }
+        }
     }
 }
