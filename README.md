@@ -27,7 +27,7 @@ This is a text based multiple player game where players can connect to the serve
 ### Player:
 
 1. Clone the project repository.
-2. A script for compiling and running server already exists on your terminal run `bash rescue_princess.sh`
+2. A script for compiling and running client already exists on your terminal run `bash rescue_princess.sh`
 
 *The game is unable to play without an active server*
 
