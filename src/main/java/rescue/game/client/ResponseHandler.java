@@ -59,23 +59,34 @@ public class ResponseHandler implements Runnable {
             }
             players = new ArrayList<>();
         }
-        switch ( node.get("command").asText() ) {
-            case "movement":
-                player.setPosition(
-                    node.get("data").get("position").get(0).asInt() - 200,
-                    node.get("data").get("position").get(1).asInt() - 200
-                );
-                break;
-            case "turn":
-                player.setDirection(
-                    ClientServerConnection
-                    .directionMapper(node.get("data").get("direction").asText())
-                );
-                break;
-            case "look":
-                drawObtacles(node.get("data").get("obstacles"));
-                drawPlayers(node.get("data").get("players"));
-        }
+        try {
+            switch ( node.get("command").asText() ) {
+                case "movement":
+                    player.setPosition(
+                        node.get("data").get("position").get(0).asInt() - 200,
+                        node.get("data").get("position").get(1).asInt() - 200
+                    );
+                    break;
+                case "turn":
+                    player.setDirection(
+                        ClientServerConnection
+                        .directionMapper(node.get("data").get("direction").asText())
+                    );
+                    break;
+                case "look":
+                    drawObtacles(node.get("data").get("obstacles"));
+                    drawPlayers(node.get("data").get("players"));
+                case "shot":
+                    player.setPosition(
+                        node.get("position").get(0).asInt() - 200,
+                        node.get("position").get(1).asInt() - 200
+                    );
+                    player.setDirection(
+                        ClientServerConnection
+                        .directionMapper(node.get("data").get("direction").asText())
+                    );
+            }
+        } catch (NullPointerException ignore) {  }
     }
 
     private void drawObtacles( JsonNode obstacles ) {
