@@ -51,7 +51,7 @@ public class ResponseHandler implements Runnable {
     }
 
     private void updateGUI(JsonNode node) {
-        if ( !node.get("command").isNull() )
+        if ( node.get("command") != null )
 
         if (players.size() != 0) {
             for ( Turtle turtle: players ) {
@@ -92,19 +92,7 @@ public class ResponseHandler implements Runnable {
             if ( !obstacleAlreadyExist(x, y, length, width) ) {
                 drawObstacle(x, y, width, length);
             }
-            // pen.setPosition(x-200, y-200);
-            // pen.setDirection(0);
-            // pen.down();
 
-            // pen.forward(width);
-            // pen.left(90);
-            // pen.forward(length);
-            // pen.left(90);
-            // pen.forward(width);
-            // pen.left(90);
-            // pen.forward(length);
-
-            // pen.up();
             count++;
         }
     }

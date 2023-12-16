@@ -134,6 +134,7 @@ public class FireCommand extends Commands {
         data.put("position", playerShooting.getPosition());
         data.put("direction", playerShooting.getDirection());
         alert.put("data", data);
+        alert.put("command", "shot");
         alert.put("health", playerShot.getHealth());
 
         for (PlayersConnection playersConnection : world.PLAYERS) {
