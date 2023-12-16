@@ -66,7 +66,6 @@ public class ClientServerConnection {
             }
             sendRequest(playerCMD);
         }
-
     }
 
     private void launchPlayer() throws JsonMappingException, JsonProcessingException, IOException {
@@ -77,7 +76,6 @@ public class ClientServerConnection {
         request.put("command", "launch");
         request.put("arguments",  new String[] {make, name});
 
-        System.out.println(request);
         out.println(request);
         out.flush();
 

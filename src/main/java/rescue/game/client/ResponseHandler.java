@@ -19,6 +19,7 @@ public class ResponseHandler implements Runnable {
     private Turtle pen;
     private List<Turtle> players = new ArrayList<>();
     private String name;
+    private List<int[]> worldObstacles = new ArrayList<>();
 
     public ResponseHandler(Socket socket, Turtle player, String name) {
         this.socket = socket;
@@ -83,26 +84,44 @@ public class ResponseHandler implements Runnable {
         int count = 0;
         while ( obstacles.get(count) != null ) {
             JsonNode obstacle = obstacles.get(count);
-            int width = obstacle.get("width").asInt(),
+            int x = obstacle.get("x").asInt(),
+                y = obstacle.get("y").asInt(),
+                width = obstacle.get("width").asInt(),
                 length = obstacle.get("length").asInt();
-            pen.setPosition(
-                obstacle.get("x").asInt()-200, 
-                obstacle.get("y").asInt()-200
-            );
-            pen.setDirection(0);
-            pen.down();
+            
+            if ( !obstacleAlreadyExist(x, y, length, width) ) {
+                drawObstacle(x, y, width, length);
+            }
+            // pen.setPosition(x-200, y-200);
+            // pen.setDirection(0);
+            // pen.down();
 
-            pen.forward(width);
-            pen.left(90);
-            pen.forward(length);
-            pen.left(90);
-            pen.forward(width);
-            pen.left(90);
-            pen.forward(length);
+            // pen.forward(width);
+            // pen.left(90);
+            // pen.forward(length);
+            // pen.left(90);
+            // pen.forward(width);
+            // pen.left(90);
+            // pen.forward(length);
 
-            pen.up();
+            // pen.up();
             count++;
         }
+    }
+
+    private boolean obstacleAlreadyExist(int x, int y, int length, int width) {
+
+        for ( int[] obstacle : worldObstacles ) {
+            if ( 
+                x == obstacle[0] && y == obstacle[1] &&
+                length == obstacle[2] && width == obstacle[3]
+             ) {
+                return true;
+             }
+        }
+        int[] obstacle = {x, y, length, width};
+        worldObstacles.add(obstacle);
+        return false;
     }
 
     private void drawPlayers(JsonNode node) {
@@ -124,5 +143,21 @@ public class ResponseHandler implements Runnable {
             players.add(player1);
             count++;
         }
+    }
+
+    private void drawObstacle(int x, int y, int width, int length) {
+        pen.setPosition(x-200, y-200);
+        pen.setDirection(0);
+        pen.down();
+
+        pen.forward(width);
+        pen.left(90);
+        pen.forward(length);
+        pen.left(90);
+        pen.forward(width);
+        pen.left(90);
+        pen.forward(length);
+
+        pen.up();
     }
 }
